@@ -1,9 +1,9 @@
 {
   "greeting": "Hey",
-  "name": "",
+  "name": "RZR",
   "greetingText": "",
   "wishText": "",
-  "imagePath": "img/lydia2.png",
+  "imagePath": "img/avatar.png",
   "text1": "",
   "textInChatBox": "",
   "sendButtonLabel": "Send",
