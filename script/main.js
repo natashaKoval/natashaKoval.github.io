@@ -1,26 +1,37 @@
 // Import the data to customize and insert them into page
 const fetchData = () => {
   fetch("customize.json")
-    .then(data => data.json())
+    .then(response => response.json())
     .then(data => {
-      dataArr = Object.keys(data);
-      dataArr.map(customData => {
-        if (data[customData] !== "") {
-          if (customData === "imagePath") {
-            document
-              .querySelector(`[data-node-name*="${customData}"]`)
-              .setAttribute("src", data[customData]);
+      const dataArr = Object.keys(data);
+
+      dataArr.forEach((customData, index) => {
+        const value = data[customData];
+
+        // Skip if the value is empty, null, or undefined
+        if (value !== "" && value != null) {
+          const element = document.querySelector(`[data-node-name*="${customData}"]`);
+
+          // Safely check if the element exists before trying to modify it
+          if (element) {
+            if (customData === "imagePath") {
+              element.setAttribute("src", value);
+            } else {
+              element.innerText = value;
+            }
           } else {
-            document.querySelector(`[data-node-name*="${customData}"]`).innerText = data[customData];
+            console.warn(`Element not found for data-node-name*="${customData}"`);
           }
         }
 
-        // Check if the iteration is over
-        // Run amimation if so
-        if ( dataArr.length === dataArr.indexOf(customData) + 1 ) {
+        // Check if this is the last item in the array
+        if (index === dataArr.length - 1) {
           animationTimeline();
-        } 
+        }
       });
+    })
+    .catch(error => {
+      console.error("Error fetching or processing data:", error);
     });
 };
 
